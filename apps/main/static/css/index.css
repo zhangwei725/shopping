@@ -1,0 +1,12 @@
+.top {
+    background: #f2f2f2;
+    padding: 15px 5px;
+}
+
+.top span, .top a {
+    padding: 5px;
+}
+
+.shop > li {
+    float: left;
+}

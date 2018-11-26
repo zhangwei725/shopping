@@ -1,0 +1,14 @@
+{% load staticfiles %}
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        {% for banner in banner_list %}
+            <div class="swiper-slide"><a href="{{ banner.detail_url }}"><img src="{% static banner.image %}"></a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</div>
+
+

@@ -1,0 +1,18 @@
+<div id="top" class="top">
+    <a href="/">
+        <span><span class="glyphicon glyphicon-home"></span>商城首页</span>
+    </a>
+    <span>欢迎来到91商城</span>
+    {% if user.is_authenticated %}
+        {#表示登录成功显示#}
+        <span>{{ user.username }}</span>
+        <a href="#">登出</a>
+    {% else %}
+        {#未登录显示#}
+        <a href="#">登录</a>
+        <a href="#">注册</a>
+    {% endif %}
+
+    <a href="#">我的订单</a>
+    <a href="#"> <span class="glyphicon glyphicon-shopping-cart"></span>购物车</a>
+</div>
