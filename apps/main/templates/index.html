@@ -1,11 +1,12 @@
 {% extends 'base/base.html' %}
+{% load  cache %}
 {% load staticfiles %}
 {% block title %}
     首页
 {% endblock %}
 {% block page_css %}
-    <link href="{% static 'css/swiper.css' %}">
-    <link href="{% static 'css/index.css' %}">
+    <link href="{% static 'css/swiper.css' %}" rel="stylesheet">
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block page_jq %}
@@ -35,27 +36,14 @@
 
 {% block page_head %}
     {% include 'include/common/top.html' %}
-    {% include 'include/navgation.html' %}
-    {% include 'include/cate.html' %}
-    {% include 'include/banner.html' %}
+    {% cache 60 'head' %}
+        {% include 'include/navgation.html' %}
+        {% include 'include/cate.html' %}
+        {% include 'include/banner.html' %}
+    {% endcache %}
 {% endblock %}
 {% block page_main %}
-    <div>
-        {% for cate in cate_list %}
-            <p>{{ cate.name }}</p>
-            <ul class="shop clear">
-                {% for  shop in cate.shops %}
-                    <li>
-                        <a href="#">
-                            <img src="/static/img/middle/{{ shop.img }}.jpg">
-                            <p>{{ shop.name }}</p>
-                            <p>{{ shop.promote_price }}</p>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </div>
+    {% include 'include/content.html' %}
 {% endblock %}
 {% block page_footer %}
 

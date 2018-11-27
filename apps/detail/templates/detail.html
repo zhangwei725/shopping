@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_head %}
+    {% include 'include/common/top.html' %}
+{% endblock %}
+
+{% block page_css %}
+    <style type="text/css">
+        .shop_img_small > li {
+            float: left;
+            padding: 5px;
+        }
+    </style>
+{% endblock %}
+{% block page_jq %}
+    <script type="text/javascript">
+        $(function () {
+            $('#shop_img_small>li').mouseover(function () {
+                let index = $(this).index();
+                for (let i = 0; i < $('#shop_img_middle>li').length; i++) {
+                    {#表示被选中#}
+                    if (index === i) {
+                        $('#shop_img_middle>li')[i].style.setProperty('display', 'block')
+                    } else {
+                        $('#shop_img_middle>li')[i].style.setProperty('display', 'none');
+                        {#  其他的要隐藏#}
+                    }
+                }
+
+            })
+
+        })
+
+
+    </script>
+{% endblock %}
+{% block page_main %}
+    <img src="">
+    <div>
+        <div id="shop_detail_img">
+            <ul id="shop_img_middle">
+
+                {% for img in shop.imgs %}
+                    {% if img.type == 'type_single' %}
+                        {% if  forloop.first %}
+                            <li><img src="/static/img/middle/{{ img.shop_img_id }}.jpg"></li>
+                        {% else %}
+                            <li style="display: none"><img src="/static/img/middle/{{ img.shop_img_id }}.jpg"></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul id="shop_img_small" class="shop_img_small clear">
+                {% for img in shop.imgs %}
+                    {% if img.type == 'type_single' %}
+                        <li><img src="/static/img/small/{{ img.shop_img_id }}.jpg"></li>
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="shop_detail_content">
+            <p>{{ shop.name }}</p>
+            <p>{{ shop.sub_title }}</p>
+        </div>
+
+    </div>
+
+{% endblock %}
