@@ -6,10 +6,36 @@
 
 {% block page_css %}
     <style type="text/css">
+        .shop_img_small {
+
+        }
+
         .shop_img_small > li {
             float: left;
-            padding: 5px;
         }
+
+        .shop_img_small {
+            width: 50%;
+            float: left;
+            text-align: center;
+        }
+
+        .shop_detail_img {
+            width: 50%;
+            float: left;
+        }
+
+        .shop_detail_img {
+            width: 50%;
+            float: left;
+        }
+
+        {#内联元素#}
+        #shop_property > div {
+            display: inline-block;
+            width: 30%;
+        }
+
     </style>
 {% endblock %}
 {% block page_jq %}
@@ -36,34 +62,42 @@
 {% endblock %}
 {% block page_main %}
     <img src="">
+    {% include 'include/shop_content.html' %}
     <div>
-        <div id="shop_detail_img">
-            <ul id="shop_img_middle">
-
+        <span>商品详情</span>
+        <span>评价{{ reviews|length }}</span>
+        <div id="shop_detail">
+            <span>产品参数</span>
+            <div id="shop_property">
+                {% for value in values %}
+                    <div class="">
+                        <span>{{ value.property.name }}</span>
+                        <span>{{ value.value }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="shop_detail_img">
                 {% for img in shop.imgs %}
-                    {% if img.type == 'type_single' %}
-                        {% if  forloop.first %}
-                            <li><img src="/static/img/middle/{{ img.shop_img_id }}.jpg"></li>
-                        {% else %}
-                            <li style="display: none"><img src="/static/img/middle/{{ img.shop_img_id }}.jpg"></li>
-                        {% endif %}
+                    {% if img.type == 'type_detail' %}
+                        <img src="/static/img/detail/{{ img.shop_img_id }}.jpg">
                     {% endif %}
                 {% endfor %}
-            </ul>
-            <ul id="shop_img_small" class="shop_img_small clear">
-                {% for img in shop.imgs %}
-                    {% if img.type == 'type_single' %}
-                        <li><img src="/static/img/small/{{ img.shop_img_id }}.jpg"></li>
-                    {% endif %}
+            </div>
+        </div>
 
-                {% endfor %}
-            </ul>
+        <div id="shop_detail_review">
+            {% for review in reviews %}
+                <p>
+                    {{ review.content }}
+                    {{ review.create_date|date:'Y-m-d' }}
+                    {{ review.user.user.username }}
+                </p>
+
+            {% endfor %}
+
+
         </div>
-        <div id="shop_detail_content">
-            <p>{{ shop.name }}</p>
-            <p>{{ shop.sub_title }}</p>
-        </div>
+
 
     </div>
-
 {% endblock %}
