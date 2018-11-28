@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+
+{% block page_head %}
+    {% include 'include/common/top.html' %}
+    {% include 'include/common/search.html' %}
+{% endblock %}
+{% block page_main %}
+    {% if shops %}
+        <ul>
+            {% for shop in shops %}
+                <li>
+                    <img src="/static/img/middle/{{ shop.img.shop_img_id }}.jpg">
+                    <p>{{ shop.promote_price }}</p>
+                    <p>{{ shop.title }}</p>
+                    <a href="">天猫抓买</a>
+                    <p><span>月成交量:100</span><span>评论 15</span></p>
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>么得你要搜索的商品</p>
+    {% endif %}
+{% endblock %}
+

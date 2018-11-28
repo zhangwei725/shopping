@@ -208,7 +208,6 @@ class ShopCar(models.Model):
         verbose_name = '购物车'
         verbose_name_plural = verbose_name
 
-
 class Image(models.Model):
     shop_img_id = models.AutoField(primary_key=True)
     shop = models.ForeignKey(Shop, models.DO_NOTHING, db_column='shop_id', db_index=True, verbose_name='商品ID')

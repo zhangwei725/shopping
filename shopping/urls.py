@@ -6,5 +6,6 @@ from apps.main import views
 urlpatterns = [
     url('admin/', admin.site.urls),
     url('^$', views.index),
-    url('shop/', include('detail.urls'))
+    url('shop/', include('detail.urls')),
+    url('search/', include('search.urls'))
 ]

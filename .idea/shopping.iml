@@ -28,6 +28,7 @@
         <option value="$MODULE_DIR$/apps/account/templates" />
         <option value="$MODULE_DIR$/apps/main/templates" />
         <option value="$MODULE_DIR$/apps/detail/templates" />
+        <option value="$MODULE_DIR$/apps/search/templates" />
       </list>
     </option>
   </component>
