@@ -23,7 +23,11 @@ SYS_APPS = ['django.contrib.admin',
             ]
 # 第三方的模块注册
 EXT_APPS = [
-    'bootstrap3'
+    # 必要组件
+    'xadmin',
+    'crispy_forms',
+    # 非必要,主要用于修改主题样式
+    'reversion',
 ]
 
 # 自定义功能模块注册

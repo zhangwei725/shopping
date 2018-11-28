@@ -4,15 +4,28 @@ from django.db import models
 import os
 import time
 
-
 # --fake 是不执行该迁移脚本但是标记该脚本已经被执行过
+"""
+1> 修改常用的样式
+2> 注册模型
+3> 显示指定字段  list_display
+4> 修改表头中文,默认是属性的名称  verbose_name
+5>修改模块的名称   apps.xxxConfig   verbose_name='xxx'
+6> 文件上传修改必填字段,默认是必填  blank = True 表示可以不填
+    
+    
+
+"""
+
 
 class Navigation(models.Model):
-    nav_id = models.AutoField(primary_key=True)
-    nav_name = models.CharField(max_length=64)
+    nav_id = models.AutoField(verbose_name='ID', primary_key=True)
+    nav_name = models.CharField(verbose_name=u'名称', max_length=64)
 
     class Meta:
         db_table = 'navigation'
+        verbose_name = u'导航'
+        verbose_name_plural = verbose_name
 
 
 """
@@ -46,7 +59,7 @@ class ImageStorage(FileSystemStorage):
 
 class User(AbstractUser):
     phone = models.CharField(max_length=11, default='110')
-    desc = models.CharField(max_length=255, null=True)
+    desc = models.CharField(max_length=255, null=True, blank=True)
     icon = models.ImageField(verbose_name=u'头像', max_length=100, upload_to='upload/img/%Y%m%d',
                              default=u"apps/static/img/default.png")
 
@@ -55,16 +68,16 @@ class User(AbstractUser):
         verbose_name = '用户管理'
         verbose_name_plural = verbose_name
 
-    # def img_show(self):
-    #     """
-    #     后台显示图片
-    #     :return:
-    #     """
-    #     return u'<img width=50px src="%s" />' % self.icon.url
-    #
-    # img_show.short_description = '头像'
-    # # 允许显示HTML tag
-    # img_show.allow_tags = True
+    def img_show(self):
+        """
+        后台显示图片
+        :return:
+        """
+        return u'<img width=50px src="%s" />' % self.icon.url
+
+    img_show.short_description = '头像111111'
+    # 允许显示HTML tag
+    img_show.allow_tags = True
 
 
 class Review(models.Model):
@@ -207,6 +220,7 @@ class ShopCar(models.Model):
         db_table = 'shop_car'
         verbose_name = '购物车'
         verbose_name_plural = verbose_name
+
 
 class Image(models.Model):
     shop_img_id = models.AutoField(primary_key=True)

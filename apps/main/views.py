@@ -17,9 +17,9 @@ def index(request):
             #  单值   flat=True  [626,647]
             # [(626,1,'type'),]
             # values [{shop_img_id:626}]
-            # shop.img = shop.shopimage_set.values('shop_img_id').first()
-            shop.img = shop.shopimage_set.values_list('shop_img_id', flat=True).first()
-            # shop.img = shop.shopimage_set.values_list('shop_img_id', 'shop_id', 'type')
+            # shop.img = shop.image_set.values('shop_img_id').first()
+            shop.img = shop.image_set.values_list('shop_img_id', flat=True).first()
+            # shop.img = shop.image_set.values_list('shop_img_id', 'shop_id', 'type')
             print(shop.img)
         cate.shops = shops
 
