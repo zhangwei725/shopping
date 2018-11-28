@@ -1,9 +1,8 @@
 from django.shortcuts import render
 
-from apps.main.models import Shop, ShopImage, PropertyValue, Review
+from apps.main.models import Shop, Image, PropertyValue, Review
 
 """
-?
 动态路由
 """
 
@@ -19,9 +18,10 @@ def detail(request):
                                                                 'original_price',
                                                                 'stock', 'sub_title',
                                                                 'name')
+
             if shops.exists():
                 shop = shops.first()
-                imgs = ShopImage.objects.filter(shop_id=shop.get('shop_id')).values('shop_img_id', 'type')
+                imgs = Image.objects.filter(shop_id=shop.get('shop_id')).values('shop_img_id', 'type')
                 shop.update(imgs=imgs)
                 values = PropertyValue.objects.filter(shop_id=shop_id)
                 reviews = Review.objects.filter(shop_id=shop_id)

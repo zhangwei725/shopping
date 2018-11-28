@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 import os
@@ -43,16 +44,14 @@ class ImageStorage(FileSystemStorage):
         return super()._save(image_file, content)
 
 
-class UserProfile(models.Model):
+class User(AbstractUser):
     phone = models.CharField(max_length=11, default='110')
     desc = models.CharField(max_length=255, null=True)
-    uid = models.AutoField('用户ID', primary_key=True)
     icon = models.ImageField(verbose_name=u'头像', max_length=100, upload_to='upload/img/%Y%m%d',
                              default=u"apps/static/img/default.png")
-    user = models.OneToOneField('auth.User')
 
     class Meta:
-        db_table = 'user_profile'
+        db_table = 'user'
         verbose_name = '用户管理'
         verbose_name_plural = verbose_name
 
@@ -73,7 +72,7 @@ class Review(models.Model):
     content = models.CharField('内容', max_length=4000, )
     create_date = models.DateTimeField('创建时间', auto_now_add=True)
     shop = models.ForeignKey('Shop', models.DO_NOTHING, db_column='shop_id', db_index=True, verbose_name="商品ID")
-    user = models.ForeignKey('UserProfile', models.DO_NOTHING, db_column='uid', db_index=True,
+    user = models.ForeignKey('User', models.DO_NOTHING, db_column='uid', db_index=True,
                              verbose_name='用户ID')
 
     class Meta:
@@ -155,7 +154,7 @@ class Order(models.Model):
     confirm_date = models.DateTimeField('确认日期', blank=True, null=True)
     """ 1正常 0 异常, -1 删除 """
     status = models.IntegerField('订单状态', choices=ORDER_STATUS, default=1)
-    user = models.ForeignKey('UserProfile', models.DO_NOTHING, db_column='uid', verbose_name="用户ID")
+    user = models.ForeignKey('User', models.DO_NOTHING, db_column='uid', verbose_name="用户ID")
 
     def __str__(self):
         return self.order_code
@@ -199,7 +198,7 @@ class ShopCar(models.Model):
     car_id = models.AutoField(verbose_name='ID', primary_key=True)
     number = models.IntegerField(verbose_name='商品数量', default=0)
     shop = models.ForeignKey(Shop, models.DO_NOTHING, verbose_name='商品ID')
-    user = models.ForeignKey('UserProfile', models.DO_NOTHING, db_column='uid', verbose_name='用户ID')
+    user = models.ForeignKey('User', models.DO_NOTHING, db_column='uid', verbose_name='用户ID')
     order = models.ForeignKey('Order', on_delete=models.SET_NULL, db_column='oid', null=True, verbose_name='商品ID')
     # 1正常 -1 删除 ， 禁止 2
     status = models.IntegerField(default=1)
@@ -210,7 +209,7 @@ class ShopCar(models.Model):
         verbose_name_plural = verbose_name
 
 
-class ShopImage(models.Model):
+class Image(models.Model):
     shop_img_id = models.AutoField(primary_key=True)
     shop = models.ForeignKey(Shop, models.DO_NOTHING, db_column='shop_id', db_index=True, verbose_name='商品ID')
     type = models.CharField('图片类型', max_length=32, blank=True, null=True)

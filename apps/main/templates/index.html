@@ -36,11 +36,10 @@
 
 {% block page_head %}
     {% include 'include/common/top.html' %}
-    {% cache 60 'head' %}
-        {% include 'include/navgation.html' %}
-        {% include 'include/cate.html' %}
-        {% include 'include/banner.html' %}
-    {% endcache %}
+    {% include 'include/common/search.html' %}
+    {% include 'include/navgation.html' %}
+    {% include 'include/cate.html' %}
+    {% include 'include/banner.html' %}
 {% endblock %}
 {% block page_main %}
     {% include 'include/content.html' %}

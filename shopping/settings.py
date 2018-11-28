@@ -74,11 +74,9 @@ DATABASES = {
     # 默认数据配置(可以配置多个)
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '91gou',
+        'NAME': 'shopping',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '112.74.42.138',
-        'PORT': '3306',
     }
 }
 
@@ -120,6 +118,8 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 # 配置文件上传的目录
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTH_USER_MODEL = 'main.User'
 
 # ========== 缓存的配置=========
 # pip install django-redis
