@@ -28,6 +28,7 @@ EXT_APPS = [
     'crispy_forms',
     # 非必要,主要用于修改主题样式
     'reversion',
+    'DjangoUeditor',
 ]
 
 # 自定义功能模块注册
@@ -37,6 +38,7 @@ CUSTOM_APPS = [
     'apps.detail',
     'apps.main',
     'apps.search',
+    'apps.cart',
 ]
 
 INSTALLED_APPS = SYS_APPS + EXT_APPS + CUSTOM_APPS
@@ -124,7 +126,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'main.User'
-
+LOGIN_URL = '/account/login/'
 # ========== 缓存的配置=========
 # pip install django-redis
 CACHES = {

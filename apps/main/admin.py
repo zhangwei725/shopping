@@ -2,19 +2,18 @@ import xadmin
 
 # 全局配置
 from xadmin import views
+from xadmin.sites import register
 
 from apps.main.models import Navigation, Shop, User
 
 
+# 注册自定义全局配置
+@register(views.BaseAdminView)
 class BaseStyleSettings:
     # 开启主题修改
     enable_themes = True
     # 使用bootbootstrap的主题
     use_bootswatch = True
-
-
-# 注册自定义全局配置
-xadmin.site.register(views.BaseAdminView, BaseStyleSettings)
 
 
 class GlobalSettings:
@@ -29,7 +28,7 @@ xadmin.site.register(views.CommAdminView, GlobalSettings)
 
 class NavigationAdmin:
     # 默认情况下显示object对象
-    list_display = ['nav_id', 'nav_name']
+    list_display = ['nav_id', 'nav_name', 'desc']
 
 
 xadmin.site.register(Navigation, NavigationAdmin)

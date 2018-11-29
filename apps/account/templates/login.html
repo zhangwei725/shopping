@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+{% block page_main %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="submit" value="登录">
+    </form>
+
+{% endblock %}

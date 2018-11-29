@@ -1,7 +1,6 @@
 <div class="shop_img_warp clear">
     <div id="shop_detail_img" class="shop_detail_img">
         <ul id="shop_img_middle">
-
             {% for img in shop.imgs %}
                 {% if img.type == 'type_single' %}
                     {% if  forloop.first %}
@@ -26,9 +25,10 @@
         <p>{{ shop.original_price }}</p>
         <p>{{ shop.promote_price }}</p>
     </div>
-    <input type="number" value="1" min="1" max="{{ shop.stock }}"><span>{{ shop.stock }}</span>
+
+    <input id="number" type="number" value="1" min="1" max="{{ shop.stock }}"><span>{{ shop.stock }}</span>
     <div>
         <button type="button">立即购买</button>
-        <button type="button">加入购物车</button>
+        <button type="button" id="buy" shopid="{{ shop.shop_id }}">加入购物车</button>
     </div>
 </div>

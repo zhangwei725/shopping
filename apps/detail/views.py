@@ -35,6 +35,6 @@ def detail(request):
             #  反向查询
         except Exception as e:
             print(e)
-    else:
-        pass
-        # return render(request, 'detail.html')
+            return render(request, 'error.html')
+
+    return render(request, 'error.html')

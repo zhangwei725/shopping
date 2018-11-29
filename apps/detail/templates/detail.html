@@ -56,7 +56,13 @@
             })
 
         })
-
+        $(function () {
+            $('#buy').click(function () {
+                {#   往服务器提交数据#}
+                let number = $('#number').val()
+                let shop_id = $(this).attr('shopid')
+            })
+        })
 
     </script>
 {% endblock %}
@@ -92,7 +98,6 @@
                     {{ review.create_date|date:'Y-m-d' }}
                     {{ review.user.user.username }}
                 </p>
-
             {% endfor %}
 
 

@@ -17,10 +17,17 @@ import time
 
 """
 
+from DjangoUeditor.models import UEditorField
+
 
 class Navigation(models.Model):
     nav_id = models.AutoField(verbose_name='ID', primary_key=True)
     nav_name = models.CharField(verbose_name=u'名称', max_length=64)
+    desc = UEditorField(verbose_name='内容', height=500, width=1000,
+                        default=u'', imagePath="Article_img/%%Y/%%m/",
+                        toolbars='full', filePath='%%Y/%%m/',
+                        upload_settings={"imageMaxSize": 1204000},
+                        settings={}, command=None)
 
     class Meta:
         db_table = 'navigation'

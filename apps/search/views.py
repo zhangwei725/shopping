@@ -3,6 +3,11 @@ from django.shortcuts import render
 
 from apps.main.models import Shop, Image
 
+"""
+like
+全文检索
+"""
+
 
 def search(request):
     if request.method == 'GET':
