@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from apps.main.models import Shop, Image, PropertyValue, Review

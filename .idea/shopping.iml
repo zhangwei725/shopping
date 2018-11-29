@@ -29,6 +29,7 @@
         <option value="$MODULE_DIR$/apps/main/templates" />
         <option value="$MODULE_DIR$/apps/detail/templates" />
         <option value="$MODULE_DIR$/apps/search/templates" />
+        <option value="$MODULE_DIR$/apps/cart/templates" />
       </list>
     </option>
   </component>

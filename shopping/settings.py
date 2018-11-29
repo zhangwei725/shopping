@@ -28,7 +28,7 @@ EXT_APPS = [
     'crispy_forms',
     # 非必要,主要用于修改主题样式
     'reversion',
-    'DjangoUeditor',
+    'django_ajax',
 ]
 
 # 自定义功能模块注册

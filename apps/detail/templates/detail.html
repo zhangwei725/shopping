@@ -55,12 +55,25 @@
 
             })
 
-        })
+        });
         $(function () {
             $('#buy').click(function () {
                 {#   往服务器提交数据#}
-                let number = $('#number').val()
-                let shop_id = $(this).attr('shopid')
+                let number = $('#number').val();
+                let shop_id = $(this).attr('shopid');
+                data = {
+                    number: number,
+                    shop_id: shop_id
+                };
+                $.get('{% url 'add' %}', data, function (result) {
+                    if (result && result.status === 200) {
+                        let number = $('#car_number').text();
+                        number += result.data;
+                        $('#car_number').text(number)
+                    } else if (result.status === 302) {
+                        window.location.href = result.content
+                    }
+                })
             })
         })
 
