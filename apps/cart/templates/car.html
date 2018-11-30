@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% load  staticfiles %}
+{% block page_css %}
+    <link rel="stylesheet" href="{% static 'css/carts.css' %}">
+{% endblock %}
+<!-- parent()获取父类元素    prevAll() 获取所有兄弟元素 -->
+<!-- 核心思想  读写一体    get first set  all-->
+<!--
+1> 点击结算----> 上传输入的数量---->需要通过car_id去修改
+---> 定位元素---选中的元素--->查找到他的 数量的input--->
+-->
+{% block page_jq %}
+    <script src="{% static 'js/carts.js' %}"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('#buy_btn').click(function () {
+                let cars = [];
+                //遍历所有的选中的购物车记录
+                $('.son_check').each(function (index, ele) {
+                    //获取被选中的元素的input的num 和 car_id
+                    if ($(ele).prop('checked')) {
+                        let $sum = $(this).parent().nextAll('.list_amount').find('.sum');
+                        let num = $sum.val();
+                        let car_id = $sum.attr('id');
+                        cars.push({num: num, car_id: car_id})
+                    }
+                });
+                if (cars.length > 0) {
+                    cars_str = JSON.stringify(cars);
+                    // 可以是对象类型  也是字符串`   key=value$ke=value
+                    data = {
+                        car: cars_str,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    };
+                    $.post('{% url 'confirm' %}', data, function (result) {
+                        if (result.status === 200) {
+                            window.location.href = '/cart/order/?oid=' + result.content.oid
+                        }
+                    })
+                }
+
+
+            })
+        })
+
+
+    </script>
+
+
+{% endblock %}
+
+{% block page_head %}
+    {% include 'include/common/top.html' %}
+{% endblock %}
+{% block page_main %}
+    {% include 'include/page_car.html' %}
+{% endblock %}

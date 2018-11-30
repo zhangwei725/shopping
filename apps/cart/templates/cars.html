@@ -1,17 +1,96 @@
 {% extends 'base/base.html' %}
+{% block page_jq %}
+    <script type="text/javascript">
+        $(function () {
+            $('.add').click(function () {
+                let num = parseInt($(this).prev().val());
+                num++;
+                // 修改商品数量
+                $(this).prev().val(num);
+                //修改商品的总价
+                // 获取总价的span标签
+                let $total_span = $(this).parent().next().find('span');
+                // 获取单价的span标签
+                let $single_span = $(this).parent().prev().find('span');
+                // 获取商品的单价
+                let price = $single_span.text();
+                // 计算总价
+                let p1 = parseFloat(price) * num;
+                // 将计算的总价转化两位小数,设置到总价中
+                $total_span.text(toDecimal2(p1))
+            });
+            $('.del').click(function () {
+                let number = parseInt($(this).next().val());
+                number = number > 1 ? number - 1 : number;
+                $(this).next().val(number);
+            });
+            // 给所有的checkbox设置点击事件
+            $('.item_ck').click(function (index, ele) {
+                    if ($(ele).prop('checked')) {
+                        $(ele).prop('checked', 'checked')
+                    } else {
+                        $(ele).removeProp('checked')
+                    }
 
+                }
+            );
+            //点击按钮选中
+            $('#all').click(function () {
+                if ($(this).prop('checked')) {
+                    //全选效果
+                    $('.item_ck').each(function (index, ele) {
+                            if (!$(ele).prop('checked')) {
+                                $(ele).prop('checked', 'checked')
+                            }
+                        }
+                    )
+                    //  js转化jq对象    $(js对象)
+                    //  jq对象转化成js对象 jq[索引]
+                } else {
+                    $('.item_ck').each(function (index, ele) {
+                            if ($(ele).prop('checked')) {
+                                $(ele).removeProp('checked')
+                            }
+                        }
+                    )
+                }
+            });
+        });
+
+
+        // 其他类型转化带两位小数的float
+        function toDecimal2(x) {
+            var f = parseFloat(x);
+            if (isNaN(f)) {
+                return false;
+            }
+            var f = Math.round(x * 100) / 100;
+            var s = f.toString();
+            var rs = s.indexOf('.');
+            if (rs < 0) {
+                rs = s.length;
+                s += '.';
+            }
+            while (s.length <= rs + 2) {
+                s += '0';
+            }
+            return s;
+        }
+    </script>
+
+{% endblock %}
 {% block page_main %}
     <table class="table">
         <tr>
-            <th><input type="checkbox">全选</th>
+            <th><input id="all" type="checkbox">全选</th>
             <th>
                 商品信息
             </th>
             <th>
-                数量
+                单价
             </th>
             <th>
-                单价
+                数量
             </th>
             <th>
                 金额
@@ -19,29 +98,30 @@
             <th>操作</th>
         </tr>
         {% for car  in car_list %}
-            <tr>
-                <th><input type="checkbox"></th>
-                <th>
-                    <img src="/static/img/small/{{ car.shop.img }}.jpg"> <span>真好玩</span>
-                </th>
-                <th>
-                    <span>-</span><input type="text" value="{{ car.number }}"><span>+</span>
-                </th>
+            <tr class="car_item">
+                <td><input class="item_ck" type="checkbox"></td>
+                <td>
+                    <img src="/static/img/small/{{ car.shop.img }}.jpg"> <span>{{ car.shop.name }}</span>
+                </td>
+                <td>
+                    <span class="price">{{ car.shop.promote_price }}</span>
+                </td>
+                <td>
+                    <button class="del">-</button>
+                    <input type="text" value="{{ car.number }}">
+                    <button class="add">+</button>
+                </td>
 
-                <th>
-                    <span>{{ car.shop.promote_price }}</span>
-                </th>
-
-                <th>
+                <td>
                     <span>{{ car.number }}</span>
-                </th>
-                <th>
+                </td>
+                <td>
                     <span>移除</span>
-                </th>
+                </td>
             </tr>
         {% endfor %}
     </table>
 
     <p>结算</p>
-
+    <input type="checkbox">
 {% endblock %}
