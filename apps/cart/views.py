@@ -1,10 +1,12 @@
 from functools import wraps
 
 from django.contrib.auth.decorators import login_required
+from django.core import cache
 from django.db.models import F
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django_ajax.decorators import ajax
+from django_redis import get_redis_connection
 
 from apps.main.models import ShopCar
 from shopping import settings
@@ -49,10 +51,10 @@ status
 @login_required
 def add_car(request):
     result = {'status': 200, 'msg': 'ok'}
-    if request.method == 'GET':
+    if request.method == 'POST':
         try:
-            number = request.GET.get("number")
-            shop_id = request.GET.get('shop_id')
+            number = request.POST.get("number")
+            shop_id = request.POST.get('shop_id')
             # 如果商品存在用户的购物车更新的操作
             # string list  hash set
             car = ShopCar.objects.filter(shop_id=shop_id, user_id=request.user.id, status=1)
@@ -74,10 +76,48 @@ def add_car(request):
         return JsonResponse(result)
 
 
+# redis
+def add_car1(request):
+    number = request.GET.get("number")
+    shop_id = request.GET.get('shop_id')
+    if number > 0 and shop_id > 0:
+        user_id = request.user.id
+        rds = get_redis_connection()
+        car_name = f'cart:{user_id}'
+        value = rds.hget(car_name, shop_id)
+        # 如果有值 做累加操作
+        if value:
+            value += number
+            rds.hset(name=car_name, key=shop_id, value=value)
+        else:
+            rds.hset(name=car_name, key=shop_id, value=number)
+    else:
+        return HttpResponse('参数错误')
+    # # string  list   hash  set  zset
+    # rds.hset('h', key=111, value=222)
+    # rds.hget(name='h', key=111)
+    # # 列表操作
+    # # li  [ 1, 2, 3, 4, 5, 5, 6,7]
+    # rds.lpush('li', 1, 2, 3, 4, 5, 5, 6)
+    # rds.rpush('li', 7)
+    # # 获取列表的中元素
+    # rds.lrange(name=, start=0, end=10)
+    # # key [1,2]
+    # rds.sadd('key', 1, 1, 2, 2)
+    # # rds.zadd()
+    return HttpResponse(11111)
+
+
 @login_required
 def list(reqeust):
     car_list = ShopCar.objects.filter(user_id=reqeust.user.id)
-    return  render(reqeust,'cars.html')
+    for car in car_list:
+        car.shop.img = car.shop.image_set \
+            .filter(shop=car.shop) \
+            .values_list('shop_img_id',flat=True) \
+            .first()
+    return render(reqeust, 'cars.html', {'car_list': car_list})
+
 
 # 修改购物车商品的数量
 def update(reqeust):

@@ -63,9 +63,10 @@
                 let shop_id = $(this).attr('shopid');
                 data = {
                     number: number,
-                    shop_id: shop_id
+                    shop_id: shop_id,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                 };
-                $.get('{% url 'add' %}', data, function (result) {
+                $.post('{% url 'add' %}', data, function (result) {
                     if (result && result.status === 200) {
                         let number = $('#car_number').text();
                         number += result.data;
@@ -80,6 +81,8 @@
     </script>
 {% endblock %}
 {% block page_main %}
+
+    {% csrf_token %}
     <img src="">
     {% include 'include/shop_content.html' %}
     <div>

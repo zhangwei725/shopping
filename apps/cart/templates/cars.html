@@ -8,15 +8,40 @@
                 商品信息
             </th>
             <th>
-                金额
-            </th>
-            <th>
                 数量
             </th>
             <th>
                 单价
             </th>
+            <th>
+                金额
+            </th>
             <th>操作</th>
         </tr>
+        {% for car  in car_list %}
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>
+                    <img src="/static/img/small/{{ car.shop.img }}.jpg"> <span>真好玩</span>
+                </th>
+                <th>
+                    <span>-</span><input type="text" value="{{ car.number }}"><span>+</span>
+                </th>
+
+                <th>
+                    <span>{{ car.shop.promote_price }}</span>
+                </th>
+
+                <th>
+                    <span>{{ car.number }}</span>
+                </th>
+                <th>
+                    <span>移除</span>
+                </th>
+            </tr>
+        {% endfor %}
     </table>
+
+    <p>结算</p>
+
 {% endblock %}
