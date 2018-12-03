@@ -185,3 +185,21 @@ LOGGING = {
         },
     }
 }
+
+"""
+==================支付宝支付配置相关 start=====================
+"""
+# 支付宝注册应用生成的应用id
+APP_ID = '2016072900120438'
+
+# 沙箱环境支付网关
+PAY_URL_DEV = 'https://openapi.alipaydev.com/gateway.do'
+# 正式支付的网关
+PAY_URL = 'https://openapi.alipay.com/gateway.do'
+# 公钥 私钥
+APP_PRIVATE_KEY_STR = open(os.path.join(BASE_DIR, 'pay/app_private_key.pem')).read()
+APP_PUBLIC_KEY_STR = open(os.path.join(BASE_DIR, 'pay/app_public_key.pem')).read()
+
+"""
+==================支付宝支付配置相关 end=====================
+"""

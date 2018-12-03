@@ -24,3 +24,5 @@ def index(request):
         cate.shops = shops
 
     return render(request, 'index.html', locals())
+
+
