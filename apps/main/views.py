@@ -3,7 +3,6 @@ from django.shortcuts import render
 from apps.main.models import Navigation, Category, Banner
 
 
-# @cache_page(7 * 60)
 def index(request):
     nav_list = Navigation.objects.all()
     cate_list = Category.objects.all()

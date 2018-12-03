@@ -1,12 +1,61 @@
-.top {
+.head_top {
+    min-width: 800px;
     background: #f2f2f2;
-    padding: 15px 5px;
+    border-top: #e5e5e5 solid 1px;
+    border-bottom: #e5e5e5 solid 1px;
+    padding: 5px 5px;
 }
 
-.top span, .top a {
-    padding: 5px;
+.head-content {
+    padding: 0 10px;
+}
+
+.head_top span, .head_top a {
+    color: #999999;
+    text-decoration: none;
+}
+
+.head_top a:hover {
+    color: #ff0036;
+}
+
+.top-right {
+    margin-right: 50px;
+    float: right;
+}
+
+.top-left {
+    float: left;
+}
+
+span.glyphicon {
+    padding-right: 5px;
 }
 
 .shop > li {
     float: left;
 }
+
+.search-warp > img {
+    width: 290px;
+    height: 130px;
+    float: left;
+}
+
+.search_wrap > form {
+    max-width: 500px;
+    float: right;
+}
+
+.search-middle {
+    margin-top: 40px;
+    height: 100%;
+}
+
+.middle {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
